@@ -14,18 +14,14 @@ app.set("view engine", "ejs");
 app.use(express.static("."));
 
 app.get("/", function (request, response) {
-    Photo.find()
-        .then((result) => {
-            response.render("index", {
-                data: result
-            })
-        })
+    Photo.find().then((result) => { response.render("index", { data: result }) })
         .catch((err) => {
             response.send(err)
         });
 });
 
 app.use(multer({ dest: "imgs" }).single("photo"));
+
 app.post("/", function (request, response) {
     let filedata = request.file;
     if (!filedata)
